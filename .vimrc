@@ -11,7 +11,7 @@ au BufNewFile,BufRead *.info set filetype=drini
 function! CoderVerify()
   let current_file = shellescape(expand('%:p'))
   let filename = shellescape(expand('%:r'))
-  let command = "!/usr/bin/coder_verify.sh " . current_file
+  let command = "!~/.vimrc.d/personal/coder_review.sh " . current_file
   execute command
 endfunction
 au BufWritePost,FileWritePost *.module,*.install,*.test,*.inc call CoderVerify()
