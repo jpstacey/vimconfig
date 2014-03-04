@@ -19,7 +19,7 @@ au BufWritePost,FileWritePost *.module,*.install,*.test,*.inc call CoderVerify()
 " Integration with own Drupal vim repository
 let g:drupal_vim_dir = "~/.vimrc.d/drupal_vim"
 " Only load Drupal vim on command
-noremap <buffer> <leader><F2>d<CR> :source ~/.vimrc.d/drupal_vim/.drupal.vimrc<CR>
+noremap <leader><F2>d<CR> :source ~/.vimrc.d/drupal_vim/.drupal.vimrc<CR>
 
 " UTF-8 by default
 set encoding=utf-8
