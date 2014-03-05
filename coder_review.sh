@@ -28,6 +28,4 @@ if [ "$1" == "0" ]; then
 fi
 
 # Now run it on the file!
-drush coder-review $file \
-  --comment --minor --sql --style $sniffer_flag \
-  2>&1 | grep -v "No Problems Found" | grep -v '^$'
+~/.vimrc.d/personal/coder_review_command.sh "$file" "$sniffer_flag"
