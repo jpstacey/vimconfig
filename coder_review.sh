@@ -23,8 +23,8 @@ file=$(echo $1 | sed -e "s!$root/!!")
 # Can run coder-review without sniffer if we have to...
 sniffer_flag=""
 which phpcs >/dev/null 2>&1
-if [ "$1" == "0" ]; then
-  has_sniffer=--sniffer
+if [ "$?" == "0" ]; then
+  sniffer_flag=--sniffer
 fi
 
 # Now run it on the file!
