@@ -2,10 +2,17 @@
 let mapleader = "-"
 let maplocalleader = "\\"
 
-" Workarounds in absence of Drupal .vimrc working
-" See https://drupal.org/node/2195775
-au BufNewFile,BufRead *.module,*.install,*.test,*.inc set filetype=php
-au BufNewFile,BufRead *.info set filetype=drini
+" (e)dit my (v)imrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>epv :vsplit ~/.vimrc.d/personal/.vimrc<cr>
+" (s)ource my (v)imrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>spv :source ~/.vimrc.d/personal/.vimrc<cr>
+
+" Save more wear on your left hand than any other mapping you ever create
+inoremap jk <esc>
+" Unmap the escape key!
+inoremap <esc> <nop>
 
 " Coder run on Drupal files
 function! CoderVerify()
@@ -14,10 +21,21 @@ function! CoderVerify()
   let command = "!~/.vimrc.d/personal/coder_review.sh " . current_file
   execute command
 endfunction
-au BufWritePost,FileWritePost *.module,*.install,*.test,*.inc call CoderVerify()
+
+" Autocommand group prevents repeat registration of au
+augroup drupal_files
+	autocmd!
+	" Workarounds in absence of Drupal .vimrc working
+	" See https://drupal.org/node/2195775
+	au BufNewFile,BufRead *.module,*.install,*.test,*.inc set filetype=php
+	au BufNewFile,BufRead *.info set filetype=drini
+	" Run coder
+	au BufWritePost,FileWritePost *.module,*.install,*.test,*.inc call CoderVerify()
+augroup END
 
 " Integration with own Drupal vim repository
 let g:drupal_vim_dir = "~/.vimrc.d/drupal_vim"
+
 " Only load Drupal vim on command
 noremap <leader><F2>d<CR> :source ~/.vimrc.d/drupal_vim/.drupal.vimrc<CR>
 
