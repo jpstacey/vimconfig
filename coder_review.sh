@@ -28,8 +28,18 @@ if [ "$has_coder" == "0" ]; then
 fi
 
 # Find this file relative to the build
-root=$(drush status | grep "Drupal root" | awk -F: '{ print $2 }')
-file=$(echo $1 | sed -e "s!$root/!!")
+root=$(drush dd root)
+file=$(echo $1 | sed -e "s^$root/^^")
+
+# Check if file is regexed by the whitelist, in which case don't review it
+if [[ -f ~/.coder_review.whitelist ]]; then
+  for i in `cat ~/.coder_review.whitelist`; do
+    if [[ $file =~ $i ]]; then
+      echo "$file is whitelisted by '$i'; omitting coder review."
+      exit 0
+    fi
+  done
+fi
 
 # Can run coder-review without sniffer if we have to...
 sniffer_flag=""
