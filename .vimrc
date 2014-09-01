@@ -36,8 +36,9 @@ augroup END
 " Integration with own Drupal vim repository
 let g:drupal_vim_dir = "~/.vimrc.d/drupal_vim"
 
-" Only load Drupal vim on command
+" Only load Drupal/Symfony vim on command
 noremap <leader><F2>d<CR> :source ~/.vimrc.d/drupal_vim/.drupal.vimrc<CR>
+noremap <leader><F2>s<CR> :source ~/.vimrc.d/symfony_vim/.symfony.vimrc<CR>
 
 " UTF-8 by default
 set encoding=utf-8
