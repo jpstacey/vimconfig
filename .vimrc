@@ -16,6 +16,18 @@ inoremap <esc> <nop>
 
 " Coder run on Drupal files
 function! CoderVerify()
+  " Check for Drupal vimrc Vundle: safest way to test if it's a Drupal file.
+  if exists("drupaldetect#DrupalRoot")
+    let is_drupal = (&filetype == 'php.drupal')
+  "  Otherwise, if Vundle isn't present, check file suffix.
+  else
+    let is_drupal = (index(['module', 'install', 'test', 'inc'], expand('%:e%')) >= 0)
+  endif
+
+  if !is_drupal
+    return
+  endif
+
   let current_file = shellescape(expand('%:p'))
   let filename = shellescape(expand('%:r'))
   let command = "!~/.vimrc.d/personal/coder_review.sh " . current_file
@@ -26,8 +38,9 @@ endfunction
 augroup drupal_files
 	autocmd!
   " Workarounds removed as bug closed: https://www.drupal.org/node/2195775
-  " Run coder
-  au BufWritePost,FileWritePost *.module,*.install,*.test,*.inc call CoderVerify()
+  " Consider all files, but check for file suffix within CoderVerify() if
+  " Vundle isn't present to set our Drupal filetype for us.
+  au BufWritePost,FileWritePost * call CoderVerify()
 augroup END
 
 " Integration with own Drupal vim repository
