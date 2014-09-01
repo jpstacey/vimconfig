@@ -25,12 +25,9 @@ endfunction
 " Autocommand group prevents repeat registration of au
 augroup drupal_files
 	autocmd!
-	" Workarounds in absence of Drupal .vimrc working
-	" See https://drupal.org/node/2195775
-	au BufNewFile,BufRead *.module,*.install,*.test,*.inc set filetype=php
-	au BufNewFile,BufRead *.info set filetype=drini
-	" Run coder
-	au BufWritePost,FileWritePost *.module,*.install,*.test,*.inc call CoderVerify()
+  " Workarounds removed as bug closed: https://www.drupal.org/node/2195775
+  " Run coder
+  au BufWritePost,FileWritePost *.module,*.install,*.test,*.inc call CoderVerify()
 augroup END
 
 " Integration with own Drupal vim repository
